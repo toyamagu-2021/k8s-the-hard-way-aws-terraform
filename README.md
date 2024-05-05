@@ -1,0 +1,2 @@
+- https://github.com/kelseyhightower/kubernetes-the-hard-way
+- https://github.com/prabhatsharma/kubernetes-the-hard-way-aws/tree/master
