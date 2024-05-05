@@ -8,7 +8,7 @@ module "jumpbox" {
   monitoring             = true
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   subnet_id              = module.vpc.public_subnets[0]
-  user_data                   = file("./scripts/script.sh")
+  user_data              = file("./scripts/script.sh")
   ami                    = var.ami_id
 
   associate_public_ip_address = true
@@ -27,6 +27,9 @@ module "server" {
   subnet_id                   = module.vpc.private_subnets[0]
   user_data                   = file("./scripts/script.sh")
   user_data_replace_on_change = true
+
+  # Very important to access between nodes
+  source_dest_check           = false
 }
 
 module "node_0" {
@@ -38,6 +41,7 @@ module "node_0" {
   instance_type               = "t4g.micro"
   key_name                    = module.ssh_key.key_pair_name
   monitoring                  = true
+  source_dest_check           = false
   vpc_security_group_ids      = [aws_security_group.allow_ssh.id]
   subnet_id                   = module.vpc.private_subnets[0]
   user_data                   = file("./scripts/script.sh")
@@ -53,6 +57,7 @@ module "node_1" {
   instance_type               = "t4g.micro"
   key_name                    = module.ssh_key.key_pair_name
   monitoring                  = true
+  source_dest_check           = false
   vpc_security_group_ids      = [aws_security_group.allow_ssh.id]
   subnet_id                   = module.vpc.private_subnets[0]
   user_data                   = file("./scripts/script.sh")
